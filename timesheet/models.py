@@ -20,7 +20,7 @@ class Task(models.Model):
     taskDescription = models.TextField()
     taskStartTime = modles.DateTimeField()
     taskEndTime = models.DateTimeField()
-    taskStatus = modles.CharFieled(max_length=100, choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')])
+    taskStatus = modles.CharFiled(max_length=100, choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')])
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
@@ -36,22 +36,22 @@ class Entry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.user} - {self.task} -{self.date}'
+        return f'{self.user} - {self.task} - {self.date}'
 class Timesheet(models.Model):
     date = models.DateField()
     weekStart = models.DateField()
-    weekEnd = models.DateField()
-    #status = models.CharField(max_length=50, choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Submitted', 'Submitted')])
+    weekEnd = models.DateField
     user = models.ForeignKey(User, on_delete=CASCADE)
     project = models.ForeignKey(Project, on_delete=CASCADE)
 
     def __str__(self):
-        return f'{self.user} - {self.weekStart} to {self.weekEnd}'
-
+    return f'{self.user} - {self.weekStart} to {self.weekEnd}'
+    
     def get_absolute_url(self):
-        return reverse('timesheet:detail_timesheet', args=[self.id])
+    # Return the URL for the model object using the app_name and the url name
+    return reverse('timesheet:detailTimesheet', args=[self.id])
 
-    @property
+@property
 def status(self):
     # Return 'Approved' if the timesheet is approved or 'Rejected' if it is rejected or 'Pending' otherwise
     if self.approved:
@@ -60,4 +60,3 @@ def status(self):
         return 'Rejected'
     else:
         return 'Pending'
-
