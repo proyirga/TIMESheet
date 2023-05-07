@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>View previous timesheets</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Week Start</th>
+            <th>Week End</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for timesheet in timesheets %}
+        <tr>
+            <td>{{ timesheet.weekStart }}</td>
+            <td>{{ timesheet.weekEnd }}</td>
+            <td>{{ timesheet.status }}</td>
+            <td><a href="{% url 'timesheet:detailTimesheet' timesheet.id %}">View Details</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'timesheet:dashboard' %}">Dashboard</a>
+
+{% endblock %}
+

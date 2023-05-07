@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Submit timesheet</h1>
+
+<p>Are you sure you want to submit your timesheet for approval?</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Duration</th>
+            <th>Task</th>
+            <th>Project</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry.date }}</td>
+            <td>{{ entry.startTime }}</td>
+            <td>{{ entry.endTime }}</td>
+            <td>{{ entry.duration }}</td>
+            <td>{{ entry.task.taskName }}</td>
+            <td>{{ entry.task.project.taskName }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes, submit it"><br/>
+</form>
+
+<a href="{% url 'timesheet:dashboard' %}">No, cancel</a>
+
+{% endblock %}
+

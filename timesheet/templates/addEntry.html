@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Add a new entry</h1>
+
+{% if error %}
+<p style="color:red">{{ error }}</p>
+
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="date">Date:</label><br/>
+    <input type="date" id="date" name="date" value="{{ today }}" required><br/>
+    <label for="start_time">Start Time:</label><br/>
+    <input type="time" id="startTime" name="startTime" value="{{ now }}" required><br/>
+    <label for="endTime">End Time:</label><br/>
+    <input type="time" id="endTime" name="endTime" value="{{ now }}" required><br/>
+    <label for="task">Task:</label><br/>
+    <select id="task" name="task" required><br/>
+        {% for task in tasks %}
+        <option value="{{ task.taskId }}">{{ task.taskName }} - {{ task.project.taskName }}</option><br/>
+        {% endfor %}
+    </select><br/>
+    <input type="submit" value="Add Entry"><br/>
+</form>
+
+<a href="{% url 'timesheet:dashboard' %}">Dahsboard</a>
+{% endblock %}
