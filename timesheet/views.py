@@ -200,4 +200,3 @@ def sendTimesheetEmail(timesheet):
     body = f'Please review and approve or reject this timesheet:\n\n{timesheet}\n\nYou can view it here: {timesheet.get_absolute_url()}'
     fromEmail = 'noreply@timesheet.com'
     toEmail = [managerEmail]
-

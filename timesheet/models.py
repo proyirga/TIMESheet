@@ -1,16 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.urls import reverse
 
 User = User
 
+from django.urls import reverse
+
 class Project(models.Model):
-    projectId = models.CharField(max_length=100)
+    projectCode = models.CharField(max_length=100)
     projectName = models.CharField(max_length=200)
     projectDescription = models.TextField()
     projectStartDate = models.DateField()
     projectEndDate = models.DateField()
-    users = ManyToManyField(User)
+    users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.projectName
@@ -18,9 +19,9 @@ class Project(models.Model):
 class Task(models.Model):
     taskName = models.CharField(max_length=100)
     taskDescription = models.TextField()
-    taskStartTime = modles.DateTimeField()
-    taskEndTime = models.DateTimeField()
-    taskStatus = modles.CharFiled(max_length=100, choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')])
+    StartTime = models.DateTimeField()
+    EndTime = models.DateTimeField()
+    Status = models.CharField(max_length=100, choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')])
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
@@ -41,15 +42,15 @@ class Timesheet(models.Model):
     date = models.DateField()
     weekStart = models.DateField()
     weekEnd = models.DateField
-    user = models.ForeignKey(User, on_delete=CASCADE)
-    project = models.ForeignKey(Project, on_delete=CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
-    return f'{self.user} - {self.weekStart} to {self.weekEnd}'
+        return f'{self.user} - {self.weekStart} to {self.weekEnd}'
     
     def get_absolute_url(self):
-    # Return the URL for the model object using the app_name and the url name
-    return reverse('timesheet:detailTimesheet', args=[self.id])
+        # Return the URL for the model object using the app_name and the url name
+        return reverse('timesheet:detailTimesheet', args=[self.id])
 
 @property
 def status(self):
